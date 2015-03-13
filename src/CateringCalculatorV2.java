@@ -8,16 +8,16 @@ import java.util.Scanner;
 /**
  * Rewritten by Jason Holdsworth using CP1300 design strategies. This is a Java
  * version of the second (Python) assignment from CP1200 2014 SP1 Demonstrating
- * some more features including lists, file I/O, dictionary (HasMap)
+ * some more features including lists, file I/O, dictionary (HashMap)
  *
- * @author Lindsay Ward
- * @version 0.2
- * @since 2014-7-30
+ * @author Lindsay Ward, Jason Holdsworth
+ * @version 0.3
+ * @since 2014-7-30, 2015-3-13
  */
 public class CateringCalculatorV2 {
 
-	private static final String MENU = "\nMenu:\n(I)nstructions\n(C)alculate Catering\n(D)isplay Packages\n"
-			+ "(L)oad Packages\n(S)ave Packages\n(A)dd Package\n(Q)uit\n>>> ";
+    private static final String MENU = "\nMenu:\n(I)nstructions\n(C)alculate Catering\n(D)isplay Packages\n"
+            + "(L)oad Packages\n(S)ave Packages\n(A)dd Package\n(Q)uit\n>>> ";
     // generator...
     private static final Scanner inputStream = new Scanner(System.in);
     private static final String INSTRUCTIONS = "This program allows you to calculate catering costs based on choice of "
@@ -39,10 +39,10 @@ public class CateringCalculatorV2 {
     static {
         DELIVERY_COSTS = new HashMap<>(4);
         DELIVERY_COSTS.put("North", 8.5);
-		DELIVERY_COSTS.put("South", 17.5);
-		DELIVERY_COSTS.put("East", 15.0);
-		DELIVERY_COSTS.put("West", 15.0);
-	}
+        DELIVERY_COSTS.put("South", 17.5);
+        DELIVERY_COSTS.put("East", 15.0);
+        DELIVERY_COSTS.put("West", 15.0);
+    }
 
     /**
      * Application main - controls the program, and runs the menu system loop
@@ -50,15 +50,15 @@ public class CateringCalculatorV2 {
      */
     public static void main(String[] args) {
 
-		// Create main packages list using Java's ArrayList class
-		// Java doesn't have a tuple construct like Python, so the easiest thing
+        // Create main packages list using Java's ArrayList class
+        // Java doesn't have a tuple construct like Python, so the easiest thing
         // to use is a class (as in part 2)
         // We could just use ArrayList<Object> for each package, but this is not
         // a good idea
         CateringPackages packages = new CateringPackages();
 
-        System.out
-                .println("Welcome to the Java version of the CP1200 Catering Calculator 2.1 (Assignment 2, 2014)");
+        System.out.println("Welcome to the Java version of the CP1200 " +
+                "Catering Calculator 2.1 (Assignment 2, 2014)");
         System.out.print(MENU);
         String menuChoice = inputStream.nextLine().toUpperCase();
         while (!menuChoice.equals("Q")) {
@@ -113,11 +113,11 @@ public class CateringCalculatorV2 {
             System.out.print(MENU);
             menuChoice = inputStream.nextLine().toUpperCase();
         }
-        System.out
-                .println("Thank you for using the Great CP1200 Catering Calculator, Java version.");
+        System.out.println("Thank you for using the Great " +
+                "CP1200 Catering Calculator, Java version.");
     }
 
-	/**
+    /**
      * Display all the current packages in the cateringPackages object
      */
     private static void displayPackages(CateringPackages packages) {
@@ -129,7 +129,7 @@ public class CateringCalculatorV2 {
         }
     }
 
-	/**
+    /**
      * displayDeliveryChoices uses a foreach style loop through the keys of the
      * HashMap, printing each key and value
      */
@@ -140,7 +140,7 @@ public class CateringCalculatorV2 {
         }
     }
 
-	/**
+    /**
      * defineNewPackage reads console input (using Scanner), making use of the
      * getValidDouble method returns an anonymous CateringPackage object
      * constructed with initial values received from console input
@@ -150,9 +150,9 @@ public class CateringCalculatorV2 {
         String name = inputStream.nextLine();
         while (name.equals("") || name.length() > PACKAGE_NAME_WIDTH) {
             System.out
-                    .println(String
-                            .format("Package name can not be blank and must be less than %d characters",
-                                    PACKAGE_NAME_WIDTH + 1));
+                    .println(String.format("Package name can not be " +
+                                    "blank and must be less than %d characters",
+                            PACKAGE_NAME_WIDTH + 1));
             System.out.print("Enter package name: ");
             name = inputStream.nextLine();
         }
@@ -163,7 +163,7 @@ public class CateringCalculatorV2 {
         return new CateringPackage(name, adultPrice, childPrice);
     }
 
-	/**
+    /**
      * calculateAndPrintCatering takes in the list of packages, gets user input
      * for catering parameters (with error checking), does the maths for the
      * catering and prints the results making use of the String.format method
@@ -194,8 +194,8 @@ public class CateringCalculatorV2 {
         }
         packageChoice -= 1;
 
-		System.out.println("None");
-		displayDeliveryChoices();
+        System.out.println("None");
+        displayDeliveryChoices();
         String deliveryChoice = inputStream.nextLine();
         // Convert deliveryChoice to Sentence case (only first letter
         // capitalised)
@@ -208,14 +208,14 @@ public class CateringCalculatorV2 {
             deliveryChoice = inputStream.nextLine();
         }
 
-		double deliveryCost = 0;
-		String deliveryMessage;
-		if (deliveryChoice.equals("") || deliveryChoice.equals("None"))
-			deliveryMessage = " (pick up)";
-		else {
-			deliveryCost = DELIVERY_COSTS.get(deliveryChoice);
-			deliveryMessage = ", delivered to " + deliveryChoice;
-		}
+        double deliveryCost = 0;
+        String deliveryMessage;
+        if (deliveryChoice.equals("") || deliveryChoice.equals("None"))
+            deliveryMessage = " (pick up)";
+        else {
+            deliveryCost = DELIVERY_COSTS.get(deliveryChoice);
+            deliveryMessage = ", delivered to " + deliveryChoice;
+        }
 
         double childPrice = packages.get(packageChoice).getChildPrice();
         String discountMessage = "";
@@ -231,27 +231,26 @@ public class CateringCalculatorV2 {
         String childWord = "children";
         if (numberChildren == 1) {
             childWord = "child";
-		}
-		String adultWord = "adults";
-		if (numberAdults == 1) {
-			adultWord = "adult";
-		}
+        }
+        String adultWord = "adults";
+        if (numberAdults == 1) {
+            adultWord = "adult";
+        }
 
-        System.out
-                .println(String
-                        .format("That will be $%.2f for the %s%s package%s for %d %s and %d %s. Enjoy!",
-                                cost, packages.get(packageChoice).getName(),
-                                discountMessage, deliveryMessage, numberAdults,
-                                adultWord, numberChildren, childWord));
+        System.out.println(String.format("That will be $%.2f for " +
+                        "the %s%s package%s for %d %s and %d %s. Enjoy!",
+                cost, packages.get(packageChoice).getName(),
+                discountMessage, deliveryMessage, numberAdults,
+                adultWord, numberChildren, childWord));
     }
 
-	/**
+    /**
      * getValidDouble is a generic method that can be customised using the input
      * parameters, returns a double
      */
     private static double getValidDouble(String prompt, String error) {
         while (true) {
-			System.out.print(prompt);
+            System.out.print(prompt);
             if (inputStream.hasNextDouble()) {
                 double inputDouble = inputStream.nextDouble();
                 // nextLine required to clear the stream since nextDouble
@@ -265,7 +264,7 @@ public class CateringCalculatorV2 {
         }
     }
 
-	/**
+    /**
      * This method shows overloading - using the same method name but different
      * parameters. It calls the getValidDouble method that has two parameters,
      * adding a minimum value requirement (3rd parameter)
@@ -275,8 +274,8 @@ public class CateringCalculatorV2 {
         double inputDouble = getValidDouble(prompt, error);
         while (inputDouble < minimum) {
             System.out.println(error);
-			inputDouble = getValidDouble(prompt, error);
-		}
-		return inputDouble;
-	}
+            inputDouble = getValidDouble(prompt, error);
+        }
+        return inputDouble;
+    }
 }

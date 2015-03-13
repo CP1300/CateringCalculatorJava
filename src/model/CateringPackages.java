@@ -80,7 +80,7 @@ public class CateringPackages {
     }
 
     /**
-     * savePackages uses the FileWriter class inititalised using the text file
+     * savePackages uses the FileWriter class initialised using the text file
      * name, writes each package to a new line much the same as it is printed in
      * the displayPackages function File opening potentially throws a checked
      * exception so it must be caught with try/catch
